@@ -53,6 +53,7 @@ const AvailableAppointment = ({date}) => {
                 {
                     bookings.map(booking => <Booking
                         booking={ booking }
+                        time={date}
                     >
 
                     </Booking>)
