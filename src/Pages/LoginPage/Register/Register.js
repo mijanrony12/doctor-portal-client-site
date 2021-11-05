@@ -1,39 +1,43 @@
-import { Alert, Button, Container, Grid, TextField, Typography,CircularProgress } from '@mui/material';
+import { Button, CircularProgress, Container, Grid, TextField, Typography,Alert} from '@mui/material';
 import React, { useState } from 'react';
-import { NavLink,useLocation,useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
 import login from '../../../images/login.png'
-const Login = () => {
-    const {error,user,loginUser,isLoading}=useAuth()
-    const [ loginData, setLoginData ] = useState({});
 
-    const location = useLocation()
-    const history = useHistory()
+const Register = () => {
+    const {error,user,registerUser,isLoading}=useAuth()
+      const [loginData, setLoginData]=useState({})
     const handleOnChange = e => {
         const field = e.target.name;
         const value = e.target.value;
         const newLoginData = { ...loginData };
         newLoginData[ field ] = value;
         setLoginData(newLoginData)
+        console.log(newLoginData)
         
     }
     const handleLogin = e => {
-       
-        e.preventDefault()
-        loginUser(loginData.email, loginData.password,location, history)
+          e.preventDefault()
+        if (loginData.password !== loginData.password2)
+        {
+            alert('password invalid');
+            return
+        }
+      registerUser(loginData.email, loginData.password)
     }
     return (
         <Container>
                    <Grid container spacing={2}>
                         <Grid item xs={12} md={6} sx={{mt:8,textAlign:'center'}}>
                                <Typography sx={{textAlign:'center'}} variant="body1" gutterBottom>
-                                          Login
+                                          Register
                               </Typography>
-                              <form onSubmit={handleLogin}>
+                              { !isLoading && <form onSubmit={handleLogin}>
                                 <TextField
                                         sx={{width:'75%',m:1}}
                                         id="standard-basic"
                                         label="Your Email"
+                                        type="email"
                                         name="email"
                                         onChange={handleOnChange}
                                         variant="standard"
@@ -44,21 +48,33 @@ const Login = () => {
                                         label="Your Password"
                                         type="password"
                                         name="password"
+                                        required
                                         onChange={handleOnChange}
                                         autoComplete="current-password"
                                         variant="standard"
-                                    />
-                                    { error && <Alert severity="error">{ error }</Alert> }
-                                   {user?.email && <Alert severity="success">Login successfully</Alert>}
-                               <Button type="submit" sx={ { width: '75%', m: 1 } } variant="contained">Login</Button>
+                                   />
+                                 <TextField
+                                         sx={{width:'75%',m:1}}
+                                        id="outlined-password-input"
+                                        label="Re- Password"
+                                        type="password"
+                                        name="password2"
+                                        onChange={handleOnChange}
+                                        autoComplete="current-password"
+                                        variant="standard"
+                                     />
+                                { error && <Alert severity="error">{ error }</Alert> }
+                                {user?.email && <Alert severity="success">user created successfully</Alert>}
+                               <Button type="submit" sx={ { width: '75%', m: 1 } } variant="contained">Register</Button>
                                    <NavLink
                                  style={ { textDecoration: 'none'} }
-                                       to="/register"
+                                       to="/login"
                                         >
-                                            <Button  variant="text">Are You new user? Please Register</Button>
+                                            <Button  variant="text">Already have an Account? Please login</Button>
                                  </NavLink>
-                          </form>
-                          { isLoading && <CircularProgress /> }
+                        </form> }
+                        { isLoading && <CircularProgress /> }
+                       
                         </Grid>
                         <Grid item xs={12} md={6}>
                                 <img style={{width:'100%', height: '75%'}} src={login} alt="" />
@@ -69,4 +85,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
