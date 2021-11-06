@@ -11,6 +11,7 @@ import Login from './Pages/LoginPage/Login/Login';
 import Register from './Pages/LoginPage/Register/Register';
 import AuthProvider from './Context/AuthProvider/AuthProvider';
 import PrivateRouter from './Pages/LoginPage/PrivateRouter/PrivateRouter';
+import DashBord from './Pages/DashBord/DashBord/DashBord';
 function App() {
   return (
     <div>
@@ -25,6 +26,9 @@ function App() {
                             </Route>
                           <PrivateRouter path="/appointment">
                               <Appointment></Appointment>
+                          </PrivateRouter>
+                          <PrivateRouter path="/dashbord">
+                              <DashBord></DashBord>
                           </PrivateRouter>
                           <Route path="/login">
                               <Login></Login>

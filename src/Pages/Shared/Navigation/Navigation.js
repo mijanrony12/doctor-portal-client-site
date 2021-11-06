@@ -28,16 +28,20 @@ const Navigation = () => {
             News
             </Typography>
             <Link to="/appointment" style={ { textDecoration: 'none', color:'white'}}>Appointment</Link>
+           
             {
               user?.email ?   
-              
-                <Button  style={ { textDecoration: 'none', color:'white'}} onClick={logOut} color="inherit">Logout</Button>
+                <>
+                     <Link to="/dashbord" style={ { textDecoration: 'none', color:'white',padding:'10px'}}>DashBoard</Link>
+                    <Button  style={ { textDecoration: 'none', color:'white' }} onClick={logOut} color="inherit">Logout</Button>
+                </>
          
               :
                 <NavLink to="/login">
                   <Button style={ { textDecoration: 'none', color:'white'}} color="inherit">Login</Button>
                 </NavLink>
             }
+            <p>{user.displayName}</p>
         </Toolbar>
       </AppBar>
     </Box>

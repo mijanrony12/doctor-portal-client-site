@@ -4,7 +4,7 @@ import { NavLink,useLocation,useHistory } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
 import login from '../../../images/login.png'
 const Login = () => {
-    const {error,user,loginUser,isLoading}=useAuth()
+    const {error,user,loginUser,isLoading,signInWithGoogle}=useAuth()
     const [ loginData, setLoginData ] = useState({});
 
     const location = useLocation()
@@ -21,6 +21,10 @@ const Login = () => {
        
         e.preventDefault()
         loginUser(loginData.email, loginData.password,location, history)
+    }
+
+    const handleGoogleLogin = () => {
+        signInWithGoogle(location, history)
     }
     return (
         <Container>
@@ -57,7 +61,9 @@ const Login = () => {
                                         >
                                             <Button  variant="text">Are You new user? Please Register</Button>
                                  </NavLink>
-                          </form>
+                         </form>
+                               <p>or</p>
+                           <Button onClick={handleGoogleLogin} sx={ { width: '50%', m: 1 } } variant="contained">google Sign In</Button>
                           { isLoading && <CircularProgress /> }
                         </Grid>
                         <Grid item xs={12} md={6}>
