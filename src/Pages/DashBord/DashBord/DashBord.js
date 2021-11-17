@@ -31,6 +31,7 @@ import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import AddDoctor from '../AddDoctor/AddDoctor';
 import useAuth from '../../../Hooks/useAuth';
 import AdminRoute from '../../LoginPage/AdminRoute/AdminRoute';
+import Payment from '../Payment/Payment';
 
 const drawerWidth = 240;
 
@@ -53,6 +54,7 @@ let { path, url } = useRouteMatch();
       { admin && <>
                 <Typography> <Link to={`${url}/makeAdmin`} style={ { textDecoration: 'none',}}>Make Admin</Link></Typography>
                 <Typography>  <Link to={`${url}/addDoctor`} style={ { textDecoration: 'none',}}>Add Doctor</Link></Typography>
+                
           </>
           }
       <List>
@@ -134,15 +136,19 @@ let { path, url } = useRouteMatch();
       >
         <Toolbar />
          <Switch>
-            <Route exact path={path}>
-                       <DashBoardHome></DashBoardHome>
-            </Route>
-            <AdminRoute path={`${path}/makeAdmin`}>
-                      <MakeAdmin></MakeAdmin>
-            </AdminRoute>
-            <AdminRoute path={`${path}/addDoctor`}>
-                      <AddDoctor></AddDoctor>
-            </AdminRoute>
+        <Route exact path={path}>
+          <DashBoardHome></DashBoardHome>
+          </Route>
+          <AdminRoute  path={ `${path}/payment/:appointmentId` }>
+               <Payment></Payment>
+          </AdminRoute>
+          
+        <AdminRoute path={`${path}/makeAdmin`}>
+             <MakeAdmin></MakeAdmin>
+        </AdminRoute>
+        <AdminRoute path={`${path}/addDoctor`}>
+             <AddDoctor></AddDoctor>
+        </AdminRoute>
       </Switch>
                  
         

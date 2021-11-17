@@ -21,7 +21,7 @@ const style = {
 };
 
 const BookingModal = ({bookingOpen,handleBookingClose,booking,time}) => {
-  const { name, date } = booking;
+  const { name, date,price } = booking;
   const { user } = useAuth();
   const initialInfo= {patientName: user.displayName, email: user.email , phone: ' '}
   const [ bookinInfo, setBookingInfo ] = useState( initialInfo)
@@ -40,13 +40,14 @@ const BookingModal = ({bookingOpen,handleBookingClose,booking,time}) => {
        //collect data
       const appointment = {
         ...bookinInfo,
+        price,
         serviceName: name,
         date,
         date: time.toLocaleDateString()
       }
       
         //send to the server
-      fetch('http://localhost:5000/appointments', {
+      fetch('https://infinite-sea-38686.herokuapp.com/appointments', {
         method: 'POST',
         headers: {
           'content-type':'application/json'

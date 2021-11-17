@@ -7,13 +7,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Link } from 'react-router-dom';
 const AllAppointment = ({date}) => {
     const { user } = useAuth()
     
     const [ allAppointment, setAllAppointment ] = useState([])
     
     useEffect(() => {
-            const url = `http://localhost:5000/allAppointment?email=${user.email}&date=${date}`
+            const url = `https://infinite-sea-38686.herokuapp.com/allAppointment?email=${user.email}&date=${date.toLocaleDateString()}`
             fetch(url)
             .then(res => res.json())
             .then(data => {
@@ -46,6 +47,10 @@ const AllAppointment = ({date}) => {
               </TableCell>
               <TableCell align="right">{appointment.date}</TableCell>
               <TableCell align="right">{appointment.serviceName}</TableCell>
+              <TableCell align="right">{ appointment.payment ?
+                'paid' :
+                <Link to={`/dashbord/payment/${appointment._id}`}> <button>pay</button> </Link>
+              }</TableCell>
              
             </TableRow>
           ))}
